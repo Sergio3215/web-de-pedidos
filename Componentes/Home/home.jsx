@@ -5,7 +5,7 @@ import Body from "../Layout/body";
 export default function Home() {
     return (
         <Body>
-            <h1>Lo mas destacado...</h1>
+            <h1>Productos Destacados</h1>
         </Body>
     );
 }
