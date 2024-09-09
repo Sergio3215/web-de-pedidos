@@ -25,7 +25,7 @@ export default function Body({ children }) {
             return (location.href.includes('settings')) ?
                         "1% 5%"
                         :
-                        "1% 35%"
+                        "1% 25%"
         } catch (error) {
             return "0"
         }
