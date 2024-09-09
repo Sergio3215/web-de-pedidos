@@ -1,0 +1,30 @@
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo--image img {
+    border: 1px solid transparent;
+    border-radius: 100%;
+    margin: 5px;
+    width: 90px;
+    height: 90px;
+}
+
+#options--menu {
+    margin: 10px;
+}
+
+#options--menu nav ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#options--menu nav ul li {
+    color: white;
+    margin-right: 12px;
+    list-style: none;
+    font-size: 22px;
+    cursor: pointer;
+}
