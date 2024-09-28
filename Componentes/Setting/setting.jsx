@@ -84,7 +84,7 @@ export default function Settings() {
                 method: 'POST',
                 body: formData
             }).then(r => r.json());
-            // console.log(data)
+            console.log(data)
             // debugger
             // setUrlImageLogo(data.url);
 
