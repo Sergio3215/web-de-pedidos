@@ -86,7 +86,7 @@ export default function Settings() {
             }).then(r => r.json());
             // console.log(data)
             // debugger
-            setUrlImageLogo(data.url);
+            // setUrlImageLogo(data.url);
 
             saveDB(colorHeader, colorBody, colorBackground, user, id, data.public_id);
         }
