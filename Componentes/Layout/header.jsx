@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import cutecat from '../../public/img example/cutecat.jpg'
 import panaLogo from '../../public/img example/panaderia logo.png'
-import { useSettings } from '../../Context/settingsContext'
+import { useSettings } from '../../Context/Settings/settingsContext'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');

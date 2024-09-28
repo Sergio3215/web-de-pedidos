@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { useSettings } from "../../Context/settingsContext";
+import { useSettings } from "../../Context/Settings/settingsContext";
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
 export default function Body({ children }) {

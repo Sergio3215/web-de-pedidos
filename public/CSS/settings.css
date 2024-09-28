@@ -1,11 +1,11 @@
-#form--settings{
+#form--settings {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-#form--settings div{
+#form--settings div {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -13,4 +13,15 @@
     flex-direction: row;
     width: 100%;
     margin: 10px;
+}
+
+#title {
+    text-align: center;
+    font-size: 40px;
+}
+
+#form--footer {
+    display: flex;
+    justify-content: center;
+    margin-top:10px;
 }

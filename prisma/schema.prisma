@@ -8,26 +8,27 @@ datasource db {
 }
 
 model users {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  user String
-  email String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  user     String
+  email    String
   password String
-  name  String
-  rol   String
+  name     String
+  rol      String
 }
 
 model customers {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  email String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String
   password String
-  name  String
-  rol   String
+  name     String
+  rol      String
 }
 
 model settings {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  user String
-  colorHeader String
-  colorBody String
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  user            String
+  colorHeader     String
+  colorBody       String
   colorBackground String
+  logo_id         String?
 }

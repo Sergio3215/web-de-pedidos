@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { useSettings } from "../../Context/settingsContext";
+import { useSettings } from "../../Context/Settings/settingsContext";
 
 export default function Background({ children }) {
 

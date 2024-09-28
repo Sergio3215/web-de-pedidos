@@ -19,7 +19,7 @@ export async function POST(req){
 
 export async function PUT(req){
     const body = await req.json();
-    const {colorHeader, colorBody, colorBackground, user, id} = body;
-    const data = await settingQuery.UpdateSettings(colorHeader, colorBody, colorBackground, user, id);
+    const {colorHeader, colorBody, colorBackground, user, id, logo_id} = body;
+    const data = await settingQuery.UpdateSettings(colorHeader, colorBody, colorBackground, user, id, logo_id);
     return Response.json({result:data});
 }

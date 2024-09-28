@@ -19,7 +19,7 @@ class SettingsQuery{
     }
 
     
-    async UpdateSettings(colorHeader, colorBody, colorBackground, user, id){
+    async UpdateSettings(colorHeader, colorBody, colorBackground, user, id, logo_id){
         return await prisma.settings.update({
             where: {
                 id: id
@@ -28,7 +28,8 @@ class SettingsQuery{
                 colorHeader: colorHeader,
                 colorBody: colorBody,
                 colorBackground: colorBackground,
-                user: user
+                user: user,
+                logo_id : logo_id,
             }
         });
     }
