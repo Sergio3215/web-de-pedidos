@@ -115,13 +115,23 @@ export default function Settings() {
             let urlNew = data.url;
 
             try {
-                const response = await fetch(data.url);
-                const blob = await response.blob();
-                urlNew = URL.createObjectURL(blob);
+                // const response = await fetch(data.url);
+                // const blob = await response.blob();
+                // urlNew = URL.createObjectURL(blob);
+
+                const data = cld
+                    .image(data.public_id);
+
+                const image = data.toURL();
+                if (image != "") {
+                    const response = await fetch(image);
+                    const blob = await response.blob();
+                    urlNew = URL.createObjectURL(blob);
+                }
             } catch (error) {
 
             }
-            
+
             setUrlImageLogo(urlNew);
 
             setLogoPublicId(data.public_id);
