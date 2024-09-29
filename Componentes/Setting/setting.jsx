@@ -112,11 +112,16 @@ export default function Settings() {
             const data = await res.json();
             // console.log(data)
 
+            let urlNew = data.url;
 
-            const response = await fetch(data.url);
-            const blob = await response.blob();
-            const urlNew = URL.createObjectURL(blob);
-            setUrlImageLogo(urlNew);
+            try {
+                const response = await fetch(data.url);
+                const blob = await response.blob();
+                urlNew = URL.createObjectURL(blob);
+                setUrlImageLogo(urlNew);
+            } catch (error) {
+
+            }
 
             setLogoPublicId(data.public_id);
             setSelectedFile(null);
@@ -159,7 +164,7 @@ export default function Settings() {
         UrlImageLogo();
 
     }, []);
-    
+
     useEffect(() => {
     }, [load]);
 
