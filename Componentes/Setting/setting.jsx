@@ -121,7 +121,6 @@ export default function Settings() {
 
                 const data = cld
                     .image(data.public_id);
-
                 const image = data.toURL();
                 if (image != "") {
                     const response = await fetch(image);
