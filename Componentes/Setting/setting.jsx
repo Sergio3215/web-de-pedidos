@@ -105,18 +105,19 @@ export default function Settings() {
             formData.append("cloud_name", cloud_name);
             formData.append("timestamp", timestamp);
 
-            const data = await fetch('https://api.cloudinary.com/v1_1/' + cloud_name + '/image/upload', {
+            const res = await fetch('https://api.cloudinary.com/v1_1/' + cloud_name + '/image/upload', {
                 method: 'POST',
                 body: formData
-            }).then(r => r.json());
+            });
+            const data = await res.json();
             // console.log(data)
 
 
             const response = await fetch(data.url);
             const blob = await response.blob();
             const urlNew = URL.createObjectURL(blob);
-
             setUrlImageLogo(urlNew);
+
             setLogoPublicId(data.public_id);
             setSelectedFile(null);
 
