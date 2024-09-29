@@ -30,5 +30,6 @@ model settings {
   colorHeader     String
   colorBody       String
   colorBackground String
+  colorButton     String
   logo_id         String?
 }

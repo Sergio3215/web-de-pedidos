@@ -2,46 +2,51 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-class SettingsQuery{
-    constructor(){
+class SettingsQuery {
+    constructor() {
 
     }
 
-    async CreateSettings(colorHeader, colorBody, colorBackground, user){
+    async CreateSettings(colorHeader, colorBody, colorBackground, colorButton, logo_id, user) {
         return await prisma.settings.create({
-            data:{
+            data: {
                 colorHeader: colorHeader,
                 colorBody: colorBody,
                 colorBackground: colorBackground,
-                user: user
+                colorButton: colorButton,
+                user: user,
+                logo_id: logo_id,
             }
         })
     }
 
-    
-    async UpdateSettings(colorHeader, colorBody, colorBackground, user, id, logo_id){
+
+    async UpdateSettings(colorHeader, colorBody, colorBackground, colorButton, logo_id, user, id) {
+        console.log(user)
+        console.log(id)
         return await prisma.settings.update({
             where: {
                 id: id
             },
-            data:{
+            data: {
                 colorHeader: colorHeader,
                 colorBody: colorBody,
                 colorBackground: colorBackground,
+                colorButton: colorButton,
                 user: user,
-                logo_id : logo_id,
+                logo_id: logo_id,
             }
         });
     }
 
-    async GetSettings(user){
+    async GetSettings(user) {
         return await prisma.settings.findMany({
             where: {
                 user: user
             }
         });
     }
-    
+
 }
 
 module.exports = {

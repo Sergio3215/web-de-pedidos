@@ -1,10 +1,14 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { settingContext } from './settingsContext';
 
 export const SettingsProvider = ({ children }) => {
 
-    const createDB = async (colorHeader, colorBody, colorBackground, user) => {
+    const [bodyColor, setBody] = useState('');
+    const [colorBack, setColorBack] = useState('');
+    const [colorButton, setColorButton] = useState('');
+
+    const createDB = async (colorHeader, colorBody, colorBackground, colorButton, logo_id, user) => {
         const myHeader = new Headers();
         myHeader.append('Content-Type', 'application/json');
         const ftch = await fetch('api/setting', {
@@ -13,6 +17,8 @@ export const SettingsProvider = ({ children }) => {
                 colorHeader: colorHeader,
                 colorBody: colorBody,
                 colorBackground: colorBackground,
+                colorButton: colorButton,
+                logo_id: logo_id,
                 user: user
             }),
             headers: myHeader
@@ -24,10 +30,21 @@ export const SettingsProvider = ({ children }) => {
     const getDB = async (user) => {
         const ftch = await fetch('api/setting?user=' + user);
         const data = await ftch.json();
+
+        // if (data.result.length != 0) {
+        //     const { colorBackground, colorBody } = data.result[0];
+        //     setBody(colorBody);
+        //     setColorBack(colorBackground);
+        // }
+
         return data;
     }
 
-    const saveDB = async (colorHeader, colorBody, colorBackground, user, id, logo_id) => {
+    useEffect(() => {
+
+    }, [colorBack, bodyColor, colorButton])
+
+    const saveDB = async (colorHeader, colorBody, colorBackground, colorButton, user, id, logo_id) => {
         const myHeader = new Headers();
         myHeader.append('Content-Type', 'application/json');
         const ftch = await fetch('api/setting', {
@@ -36,9 +53,10 @@ export const SettingsProvider = ({ children }) => {
                 colorHeader: colorHeader,
                 colorBody: colorBody,
                 colorBackground: colorBackground,
+                colorButton: colorButton,
                 user: user,
                 id: id,
-                logo_id : logo_id 
+                logo_id: logo_id
             }),
             headers: myHeader
         });
@@ -46,8 +64,25 @@ export const SettingsProvider = ({ children }) => {
         return data;
     }
 
+    const updateEnviroment = (value, place) => {
+        switch (place) {
+            case 'body':
+                setBody(value);
+                break;
+            case 'background':
+                setColorBack(value);
+                break;
+            case 'button':
+                setColorButton(value);
+                break;
+            default:
+                break;
+        }
+    }
+
+
     return (
-        <settingContext.Provider value={{ createDB, getDB, saveDB }}>
+        <settingContext.Provider value={{ createDB, getDB, saveDB, updateEnviroment, bodyColor, colorBack, colorButton }}>
             {children}
         </settingContext.Provider>
     )

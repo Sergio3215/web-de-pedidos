@@ -1,0 +1,24 @@
+#loader--container {
+    display: flex;
+    justify-content: center;
+}
+
+#loader--container div {
+    font-size: 225px;
+    color: white;
+    animation: medioAparecer 2.5s infinite;
+}
+
+
+#loader--container div:first-child,#loader--container div:last-child {
+    animation: medioAparecer 1.5s infinite;
+}
+
+@keyframes medioAparecer{
+    from{
+        opacity: 0.5;
+    }
+    to{
+        opacity: 1;
+    }
+}

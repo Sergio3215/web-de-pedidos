@@ -5,20 +5,24 @@ const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
 export default function Body({ children }) {
 
-    const { getDB } = useSettings();
+    const { getDB, bodyColor } = useSettings();
 
     const [backgroundColor, setBackgroundColor] = useState("");
     const [padding, setPadding] = useState('0');
 
     const getColor = async () => {
         let color = await getDB("test");
-        setBackgroundColor(color.result[0].colorBody);
+        setBackgroundColor(color.result.length == 0 ? "#000" : color.result[0].colorBody);
     }
 
     useEffect(() => {
         getColor();
         setPadding(getPadding())
     }, []);
+
+    useEffect(()=> {
+        setBackgroundColor(bodyColor);
+    }, [bodyColor])
 
     const getPadding = ()=>{
         try {

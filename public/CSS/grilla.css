@@ -1,0 +1,33 @@
+#grilla--container{
+    background-color: white;
+    color:black;
+}
+
+#form--settings #grilla--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+
+#form--settings #grilla--header div {
+    border-right: 2px solid rgb(160,160,160);
+    border-radius: 0px;
+}
+
+#form--settings #grilla--header div:last-child {
+    border-right: 0px solid transparent;
+    border-radius: 0px;
+}
+
+#grilla--table, #form--settings #grilla--header{
+    padding-bottom: 15px;
+}
+
+.grilla--button button{
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 22px;
+}

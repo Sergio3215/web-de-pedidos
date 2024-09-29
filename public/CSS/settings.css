@@ -25,3 +25,33 @@
     justify-content: center;
     margin-top:10px;
 }
+
+.pic--logo img{
+    border-radius: 100%;
+}
+
+#container--logo--file{
+    display: flex;
+    flex-direction: column;
+}
+
+#container--logo--file button, #form--footer button{
+    padding: 8px 24px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#form--footer button {
+    font-size: 22px;
+}
+
+
+#container--logo--file button:hover, #form--footer button:hover{
+    
+}
+
+.logo---file{
+    display: none;
+}
