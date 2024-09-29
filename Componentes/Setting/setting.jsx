@@ -130,6 +130,9 @@ export default function Settings() {
                 // location.reload(true);
             }
         }
+        await setTimeout(()=>{
+            setLoad(false);
+        }, 2000)
     }
 
     const getCloudi = async () => {
@@ -256,11 +259,8 @@ export default function Settings() {
                         </Body>
                         <div id="form--footer">
                             <button onClick={async () => {
-                                mySaveSettings('test');
                                 setLoad(true);
-                                await setTimeout(() => {
-                                    setLoad(false);
-                                }, 2000)
+                                mySaveSettings('test');
                             }} style={Styled.btn}>Guardar</button>
                         </div>
                     </Background>
