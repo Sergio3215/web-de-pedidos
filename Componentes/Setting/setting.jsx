@@ -130,9 +130,7 @@ export default function Settings() {
                 // location.reload(true);
             }
         }
-        await setTimeout(()=>{
-            setLoad(false);
-        }, 2000)
+        setLoad(false);
     }
 
     const getCloudi = async () => {
@@ -160,6 +158,9 @@ export default function Settings() {
         UrlImageLogo();
 
     }, []);
+    
+    useEffect(() => {
+    }, [load]);
 
     return (
         <>
