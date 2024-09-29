@@ -18,12 +18,12 @@ export function GET(req, res) {
     }
 }
 
-export function POST(req, res) {
+export async function POST(req, res) {
     const url = new URL(req.url) 
     const public_id = url.searchParams.get("public_id");
 
     try {
-        cloudinary.api.delete_resources(public_id);
+        await cloudinary.api.delete_resources(public_id);
         return Response.json({ success:true});
     } catch (error) {
         return Response.json({ success:false});

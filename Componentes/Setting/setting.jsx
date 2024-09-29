@@ -88,13 +88,16 @@ export default function Settings() {
              * Para llamarlo
              * https://res.cloudinary.com/dkart8ohp/image/upload/v1726980519/pedido-web/ + public_id
              */
+
             const { cloud_name, api_key, api_secret } = configCloudinary.cloudinaryConfig;
             const timestamp = `${Math.round(new Date().getTime() / 1000)}`;
 
-            const ftch = await fetch(`${location.origin}/api/cloudinary?public_id=${logoPublicId}`, {
-                method: 'POST',
-            });
-            const res = await ftch.json();
+            if (logoPublicId !== "") {
+                const ftch = await fetch(`${location.origin}/api/cloudinary?public_id=${logoPublicId}`, {
+                    method: 'POST',
+                });
+                const res = await ftch.json();
+            }
 
             const formData = new FormData();
             formData.append('upload_preset', 'pedido-web');
@@ -123,7 +126,7 @@ export default function Settings() {
                 setId(mySetting.result.id);
             }
             else {
-                saveDB(colorHeader, colorBody, colorBackground, colorButton, user, id, data.public_id);
+                await saveDB(colorHeader, colorBody, colorBackground, colorButton, data.public_id, user, id);
                 // location.reload(true);
             }
         }
@@ -252,12 +255,12 @@ export default function Settings() {
                             </div>
                         </Body>
                         <div id="form--footer">
-                            <button onClick={() => {
+                            <button onClick={async () => {
                                 mySaveSettings('test');
                                 setLoad(true);
-                                setTimeout(() => {
+                                await setTimeout(() => {
                                     setLoad(false);
-                                }, 2000);
+                                }, 2000)
                             }} style={Styled.btn}>Guardar</button>
                         </div>
                     </Background>

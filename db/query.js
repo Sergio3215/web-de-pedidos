@@ -22,8 +22,7 @@ class SettingsQuery {
 
 
     async UpdateSettings(colorHeader, colorBody, colorBackground, colorButton, logo_id, user, id) {
-        console.log(user)
-        console.log(id)
+        console.log(logo_id)
         return await prisma.settings.update({
             where: {
                 id: id

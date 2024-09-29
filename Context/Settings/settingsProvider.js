@@ -44,7 +44,7 @@ export const SettingsProvider = ({ children }) => {
 
     }, [colorBack, bodyColor, colorButton])
 
-    const saveDB = async (colorHeader, colorBody, colorBackground, colorButton, user, id, logo_id) => {
+    const saveDB = async (colorHeader, colorBody, colorBackground, colorButton, logo_id, user, id) => {
         const myHeader = new Headers();
         myHeader.append('Content-Type', 'application/json');
         const ftch = await fetch('api/setting', {
