@@ -118,10 +118,11 @@ export default function Settings() {
                 const response = await fetch(data.url);
                 const blob = await response.blob();
                 urlNew = URL.createObjectURL(blob);
-                setUrlImageLogo(urlNew);
             } catch (error) {
 
             }
+            
+            setUrlImageLogo(urlNew);
 
             setLogoPublicId(data.public_id);
             setSelectedFile(null);
