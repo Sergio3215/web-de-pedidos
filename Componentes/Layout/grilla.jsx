@@ -42,20 +42,6 @@ export default function Grilla({ header, grillaBody, label }) {
         setShowModal(true);
     }
 
-    // const scrollEvent = (e) => {
-    //     // console.log(e.currentTarget.scrollY);
-    //     if (document.querySelector('.bk--black') != null) {
-    //         let Y = e.currentTarget.scrollY - (innerHeight / 2);
-    //         document.querySelector('.bk--black').style.transform = `translate(0px, ${Y}px)`;
-    //         document.querySelector('#form--grilla').style.transform = `translate(0px, ${Y}px)`;
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     window.addEventListener('scroll', (e) => {
-    //         scrollEvent(e);
-    //     });
-    // }, []);
 
     return (
         <>

@@ -173,7 +173,10 @@ export default function Settings() {
         getMySettings('test');
         getCloudi();
         UrlImageLogo();
-        setInnerWidth(window.innerWidth);
+        setInnerWidth(window.innerWidth-17);
+        window.addEventListener('resize', () => {
+            setInnerWidth(window.innerWidth-17);
+        });
     }, []);
 
     useEffect(() => {
