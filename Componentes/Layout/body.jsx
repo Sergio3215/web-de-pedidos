@@ -5,14 +5,13 @@ const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
 export default function Body({ children }) {
 
-    const { getDB, bodyColor } = useSettings();
+    const { bodyColor } = useSettings();
 
     const [backgroundColor, setBackgroundColor] = useState("");
     const [padding, setPadding] = useState('0');
 
     const getColor = async () => {
-        let color = await getDB("test");
-        setBackgroundColor(color.result.length == 0 ? "#000" : color.result[0].colorBody);
+        setBackgroundColor(bodyColor);
     }
 
     useEffect(() => {
@@ -40,7 +39,8 @@ export default function Body({ children }) {
             <div style={{
                 background: backgroundColor,
                 color: (backgroundColor != "") ? getMonoColor(getNameColorARGB(backgroundColor)) : '',
-                padding: padding
+                padding: padding,
+                textAlign:"center"
             }}>
                 {children}
             </div>

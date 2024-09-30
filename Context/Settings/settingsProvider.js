@@ -31,15 +31,20 @@ export const SettingsProvider = ({ children }) => {
         const ftch = await fetch('api/setting?user=' + user);
         const data = await ftch.json();
 
-        // if (data.result.length != 0) {
-        //     const { colorBackground, colorBody } = data.result[0];
-        //     setBody(colorBody);
-        //     setColorBack(colorBackground);
-        // }
+        if (data.result.length != 0) {
+            const { colorBackground, colorBody } = data.result[0];
+            setBody(colorBody);
+            setColorBack(colorBackground);
+            setColorButton(colorButton)
+        }
 
         return data;
     }
 
+    useEffect(() => {
+        getDB();
+    }, []);
+    
     useEffect(() => {
 
     }, [colorBack, bodyColor, colorButton])
