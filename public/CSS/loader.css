@@ -1,24 +1,45 @@
-#loader--container {
+#loader--container, #loader--text--container, #loader--container--general {
     display: flex;
     justify-content: center;
 }
 
-#loader--container div {
-    font-size: 225px;
-    color: white;
-    animation: medioAparecer 2.5s infinite;
+#loader--container div, #loader--container--general div {
+    font-size: 105px;
 }
 
-
-#loader--container div:first-child,#loader--container div:last-child {
-    animation: medioAparecer 1.5s infinite;
+#loader--container div{
+    animation: medioAparecer 1s infinite;
 }
+
+#loader--container div:nth-child(1){
+    animation-delay: 0.2s;
+}
+
+#loader--container div:nth-child(2){
+    animation-delay: 0.4s;
+}
+#loader--container div:nth-child(3){
+    animation-delay: 0.6s;
+}
+
 
 @keyframes medioAparecer{
     from{
-        opacity: 0.5;
+        opacity: 1;
     }
     to{
-        opacity: 1;
+        opacity: 0.2;
+    }
+}
+
+@media(max-width: 500px){
+    #loader--container div, #loader--container--general div {
+        font-size: 75px;
+    }
+}
+
+@media(max-width: 340px){
+    #loader--container div, #loader--container--general div {
+        font-size: 45px;
     }
 }

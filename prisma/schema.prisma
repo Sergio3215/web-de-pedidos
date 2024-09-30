@@ -33,3 +33,11 @@ model settings {
   colorButton     String
   logo_id         String?
 }
+
+model products{
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  price          Int
+  highlights     Boolean
+  image_id       String
+}

@@ -48,6 +48,49 @@ class SettingsQuery {
 
 }
 
+class ProductQuery {
+    constructor() {
+    }
+
+    async GetProduct() {
+        return await prisma.products.findMany();
+    }
+
+    async CreateProduct(name, price, hightlight, img_id) {
+        return await prisma.products.create({
+            data: {
+                name: name,
+                price: price,
+                hightlight: hightlight,
+                img_id: img_id
+            }
+        })
+    }
+
+    async UpdateProduct(id, name, price, hightlight, img_id) {
+        return await prisma.products.update({
+            where: {
+                id: id
+            },
+            data: {
+                name: name,
+                price: price,
+                hightlight: hightlight,
+                img_id: img_id
+            }
+        })
+    }
+
+    async DeleteProduct(id) {
+        return await prisma.products.delete({
+            where: {
+                id: id
+            }
+        })
+    }
+}
+
 module.exports = {
-    SettingsQuery
+    SettingsQuery,
+    ProductQuery
 };

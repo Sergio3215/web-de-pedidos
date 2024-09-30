@@ -5,6 +5,7 @@ import "../public/CSS/settings.css"
 import "../public/CSS/productos.css"
 import "../public/CSS/grilla.css"
 import "../public/CSS/loader.css"
+import "../public/CSS/formGrilla.css"
 
 export const metadata = {
     title: 'Pedido Web',

@@ -18,24 +18,32 @@
 #title {
     text-align: center;
     font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    position: sticky;
+    top: 0px;
 }
 
 #form--footer {
     display: flex;
     justify-content: center;
-    margin-top:10px;
+    margin-top: 10px;
 }
 
-.pic--logo img{
+.pic--logo img {
     border-radius: 100%;
 }
 
-#container--logo--file{
+#container--logo--file {
     display: flex;
     flex-direction: column;
 }
 
-#container--logo--file button, #form--footer button{
+#container--logo--file button,
+#form--footer button {
     padding: 8px 24px;
     border-radius: 5px;
     border: 1px solid gray;
@@ -45,13 +53,23 @@
 
 #form--footer button {
     font-size: 22px;
+    margin-left: 40px;
 }
 
 
-#container--logo--file button:hover, #form--footer button:hover{
-    
-}
+#container--logo--file button:hover,
+#form--footer button:hover {}
 
-.logo---file{
+.logo---file {
     display: none;
+}
+
+@media(max-width: 435px){
+    #title {
+        font-size: 20px;
+    }
+    #form--footer button {
+        font-size: 20px;
+        margin-left: 20px;
+    }
 }

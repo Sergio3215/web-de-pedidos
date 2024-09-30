@@ -29,6 +29,7 @@ export default function Settings() {
     const [urlImageLogo, setUrlImageLogo] = useState("");
     const [logoPublicId, setLogoPublicId] = useState('');
     const [load, setLoad] = useState(false);
+    const [innerWidth, setInnerWidth] = useState(false);
 
     const { createDB, getDB, saveDB, updateEnviroment } = useSettings();
     const { getCloudinary } = useCloudinary();
@@ -77,7 +78,7 @@ export default function Settings() {
                 setId(mySetting.result.id);
             }
             else {
-                saveDB(colorHeader, colorBody, colorBackground, colorButton, logoPublicId, user, id);
+                await saveDB(colorHeader, colorBody, colorBackground, colorButton, logoPublicId, user, id);
                 // location.reload(true);
             }
         }
@@ -172,7 +173,7 @@ export default function Settings() {
         getMySettings('test');
         getCloudi();
         UrlImageLogo();
-
+        setInnerWidth(window.innerWidth);
     }, []);
 
     useEffect(() => {
@@ -187,10 +188,19 @@ export default function Settings() {
                     </>
                     :
                     <Background>
-                        <div id="title">
+                        <div id="title" style={{
+                            background:colorHeader,
+                            width:innerWidth !== undefined ? innerWidth : "100%"
+                        }}>
                             <label style={{
-                                color: getMonoColor(getNameColorARGB(colorBackground))
+                                color: getMonoColor(getNameColorARGB(colorHeader))
                             }}>Configuracion de la pagina</label>
+                            <div id="form--footer">
+                                <button onClick={async () => {
+                                    setLoad(true);
+                                    mySaveSettings('test');
+                                }} style={Styled.btn}>Guardar</button>
+                            </div>
                         </div>
                         <Body>
                             <h1>Perfil</h1>
@@ -274,12 +284,6 @@ export default function Settings() {
                                 </div>
                             </div>
                         </Body>
-                        <div id="form--footer">
-                            <button onClick={async () => {
-                                setLoad(true);
-                                mySaveSettings('test');
-                            }} style={Styled.btn}>Guardar</button>
-                        </div>
                     </Background>
             }
         </>
