@@ -10,7 +10,7 @@ export default function ProductProvider({ children }) {
     const getProduct = async () => {
         const ftch = await fetch('/api/products');
         const data = await ftch.json();
-        console.log(data);
+        // console.log(data);
         setProduct(data);
     }
 
