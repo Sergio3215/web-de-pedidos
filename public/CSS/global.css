@@ -1,5 +1,13 @@
-body{
+body {
     padding: 0px;
     margin: 0px;
     border: 0px;
+}
+
+button, input[type=submit] {
+    padding: 8px 24px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+    font-size: 20px;
 }

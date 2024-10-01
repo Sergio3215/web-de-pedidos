@@ -1,8 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { useSettings } from "../../Context/Settings/settingsContext";
+const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
 export default function CreateGrilla({ fields, setShowModal, action }) {
+
+    const { colorButton } = useSettings();
+
 
     const [width, setWidth] = useState(window.innerWidth);
     const [height, setHeight] = useState(window.innerHeight);
@@ -22,7 +27,7 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                 width: "100%",
                 height: "100%",
             }}></div>
-            <form action={action} method="POST" id="form--grilla" onSubmit={handlerSubmit}>
+            <form id="form--grilla" onSubmit={handlerSubmit}>
                 <div id="close--popup" onClick={closeModal}>X</div>
                 {
                     fields.map((dt, index) => {
@@ -58,7 +63,13 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                                             }} />
                                                                             <button onClick={() => {
                                                                                 document.querySelector("#grid--file").click();
-                                                                            }}>Subir Foto</button>
+                                                                            }} 
+                                                                            style={{
+                                                                                background: colorButton,
+                                                                                color: getMonoColor(getNameColorARGB(colorButton))
+                                                                            }}>
+                                                                                Subir Foto
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </>
@@ -84,7 +95,14 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                     })
                 }
                 <div>
-                    <input type="submit" value="Guardar" />
+                    <input 
+                    style={{
+                        background: colorButton,
+                        color: getMonoColor(getNameColorARGB(colorButton))
+                    }}
+                    type="submit" 
+                    value="Guardar" 
+                    />
                 </div>
             </form>
         </>
