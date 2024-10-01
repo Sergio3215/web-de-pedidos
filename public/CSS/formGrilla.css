@@ -24,3 +24,8 @@
     background-color: rgba(0, 0, 0, 0.5);
     top: -11px;
 }
+
+#form--checkbox{
+    display: flex !important;
+    flex-wrap: nowrap !important;
+}

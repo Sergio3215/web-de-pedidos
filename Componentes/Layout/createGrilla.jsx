@@ -12,13 +12,17 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
         setShowModal(false);
     }
 
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <>
             <div className="bk--black" onClick={closeModal} style={{
                 width: "100%",
                 height: "100%",
             }}></div>
-            <form action={action} method="POST" id="form--grilla">
+            <form action={action} method="POST" id="form--grilla" onSubmit={handlerSubmit}>
                 <div id="close--popup" onClick={closeModal}>X</div>
                 {
                     fields.map((dt, index) => {
@@ -26,16 +30,54 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                             <>
                                 {
                                     dt == "Fecha Creación" ?
-                                        <></>
+                                        <>
+                                        </>
                                         :
-                                        <div key={index}>
-                                            <div>
-                                                <label>{dt}</label>
-                                            </div>
-                                            <div>
-                                                <input type="text" name={dt} />
-                                            </div>
-                                        </div>
+                                        <>
+                                            {
+                                                dt == "Destacados" || dt == "Estado" ?
+                                                    <>
+                                                        <div id="form--checkbox" key={index}>
+                                                            <div>
+                                                                <label>{dt}</label>
+                                                            </div>
+                                                            <div>
+                                                                <input type="checkbox" name={dt} />
+                                                            </div>
+                                                        </div>
+                                                        {
+                                                            dt == "Destacados" ?
+                                                                <>
+                                                                    <div key={index}>
+                                                                        <div>
+                                                                            <label>{"Foto"}</label>
+                                                                        </div>
+                                                                        <div>
+                                                                            <input id="grid--file" type="file" name={"file"} style={{
+                                                                                display: "none"
+                                                                            }} />
+                                                                            <button onClick={() => {
+                                                                                document.querySelector("#grid--file").click();
+                                                                            }}>Subir Foto</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </>
+                                                                :
+                                                                <>
+                                                                </>
+                                                        }
+                                                    </>
+                                                    :
+                                                    <div key={index}>
+                                                        <div>
+                                                            <label>{dt}</label>
+                                                        </div>
+                                                        <div>
+                                                            <input type="text" name={dt} />
+                                                        </div>
+                                                    </div>
+                                            }
+                                        </>
                                 }
                             </>
                         )
