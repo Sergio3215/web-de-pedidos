@@ -10,7 +10,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 
 export default function Header() {
 
-    const { getDB } = useSettings();
+    const { colorHead, imgId } = useSettings();
 
     const router = useRouter();
 
@@ -21,8 +21,6 @@ export default function Header() {
         },
     });
 
-
-    const [headerColor, setHeaderColor] = useState("");
     const [urlIdLogo, setUrlIdLogo] = useState("");
     const [arrOptions, setArrOptions] = useState([
         {
@@ -44,14 +42,8 @@ export default function Header() {
     ]);
 
     const getColor = async () => {
-        let color = await getDB("test");
-        const { colorHeader, logo_id } = color.result[0];
-
-        setHeaderColor(colorHeader);
-
-
         const data = cld
-            .image(logo_id);
+            .image(imgId);
 
         const image = data.toURL();
         if (image != '') {
@@ -65,7 +57,7 @@ export default function Header() {
             const blob = await response.blob();
             setUrlIdLogo(URL.createObjectURL(blob));
             panaLogo.src = URL.createObjectURL(blob);
-            console.log(panaLogo.src)
+            setUrlIdLogo(panaLogo.src)
             // debugger
         }
     }
@@ -75,8 +67,13 @@ export default function Header() {
     }, []);
 
     useEffect(() => {
-        console.log(urlIdLogo)
+        // console.log(urlIdLogo)
     }, [urlIdLogo]);
+
+    
+    useEffect(() => {
+        getColor();
+    }, [imgId]);
 
     const redirectURL = (href) => {
         router.push(`/${href}`);
@@ -84,12 +81,12 @@ export default function Header() {
 
     return (
         <div id="header" style={{
-            background: headerColor,
+            background: colorHead,
         }}>
             <div id="logo--image">
                 <Image
-                    width={120}
-                    height={120}
+                    width={90}
+                    height={90}
                     src={urlIdLogo}
                     alt='logo of page'
                 />
@@ -102,7 +99,7 @@ export default function Header() {
                                 return (
                                     <li onClick={() => redirectURL(m.url)}
                                         style={{
-                                            color: getMonoColor(getNameColorARGB(headerColor))
+                                            color: getMonoColor(getNameColorARGB(colorHead))
                                         }} key={index}>
                                         {m.name}
                                     </li>

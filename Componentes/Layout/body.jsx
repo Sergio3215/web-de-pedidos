@@ -7,20 +7,14 @@ export default function Body({ children }) {
 
     const { bodyColor } = useSettings();
 
-    const [backgroundColor, setBackgroundColor] = useState("");
     const [padding, setPadding] = useState('0');
 
-    const getColor = async () => {
-        setBackgroundColor(bodyColor);
-    }
-
     useEffect(() => {
-        getColor();
         setPadding(getPadding())
     }, []);
 
     useEffect(()=> {
-        setBackgroundColor(bodyColor);
+        
     }, [bodyColor])
 
     const getPadding = ()=>{
@@ -37,8 +31,8 @@ export default function Body({ children }) {
     return (
         <div id="body">
             <div style={{
-                background: backgroundColor,
-                color: (backgroundColor != "") ? getMonoColor(getNameColorARGB(backgroundColor)) : '',
+                background: bodyColor,
+                color: (bodyColor != "") ? getMonoColor(getNameColorARGB(bodyColor)) : '',
                 padding: padding,
                 textAlign:"center"
             }}>

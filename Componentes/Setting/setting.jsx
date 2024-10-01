@@ -19,20 +19,15 @@ const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
 export default function Settings() {
 
-    const [colorHeader, setColorHeader] = useState("#0000");
-    const [colorBody, setColorBody] = useState("#0000");
-    const [colorBackground, setColorBackground] = useState("#0000");
-    const [colorButton, setColorButton] = useState("#0000");
-    const [id, setId] = useState("");
+    const { createDB, getDB, saveDB, updateEnviroment, bodyColor, colorBack, colorButton, imgId, colorHead, id } = useSettings();
+    const { getCloudinary } = useCloudinary();
+
     const [configCloudinary, setConfigCloudinary] = useState({});
     const [selectedFile, setSelectedFile] = useState(null);
     const [urlImageLogo, setUrlImageLogo] = useState("");
     const [logoPublicId, setLogoPublicId] = useState('');
     const [load, setLoad] = useState(false);
     const [innerWidth, setInnerWidth] = useState(false);
-
-    const { createDB, getDB, saveDB, updateEnviroment } = useSettings();
-    const { getCloudinary } = useCloudinary();
 
     const cld = new Cloudinary({
         cloud: {
@@ -47,38 +42,30 @@ export default function Settings() {
         }
     }
 
-    const getMySettings = async (user) => {
-        let mySetting = await getDB(user);
-        if (mySetting.result.length != 0) {
-            setId(mySetting.result[0].id);
-            setColorHeader(mySetting.result[0].colorHeader);
-            setColorBody(mySetting.result[0].colorBody);
-            setColorBackground(mySetting.result[0].colorBackground);
-            setLogoPublicId(mySetting.result[0].logo_id);
-            setColorButton(mySetting.result[0].colorButton);
+    const getMySettings = async () => {
+        setLogoPublicId(imgId);
 
-            const data = cld
-                .image(mySetting.result[0].logo_id);
-            // console.log(data.toURL())
+        const data = cld
+            .image(imgId);
+        // console.log(data.toURL())
 
-            const image = data.toURL();
-            if (image != "") {
-                const response = await fetch(image);
-                const blob = await response.blob();
-                const urlNew = URL.createObjectURL(blob);
-                setUrlImageLogo(urlNew);
-            }
+        const image = data.toURL();
+        if (image != "") {
+            const response = await fetch(image);
+            const blob = await response.blob();
+            const urlNew = URL.createObjectURL(blob);
+            setUrlImageLogo(urlNew);
         }
     }
 
     const mySaveSettings = async (user) => {
         if (!selectedFile) {
             if (id == "") {
-                const mySetting = await createDB(colorHeader, colorBody, colorBackground, colorButton, "", user);
-                setId(mySetting.result.id);
+                const mySetting = await createDB(colorHead, bodyColor, colorBack, colorButton, "", user);
+                updateEnviroment(mySetting.result.id, "id");
             }
             else {
-                await saveDB(colorHeader, colorBody, colorBackground, colorButton, logoPublicId, user, id);
+                await saveDB(colorHead, bodyColor, colorBack, colorButton, logoPublicId, user, id);
                 // location.reload(true);
             }
         }
@@ -139,11 +126,11 @@ export default function Settings() {
 
 
             if (id == "") {
-                const mySetting = await createDB(colorHeader, colorBody, colorBackground, colorButton, data.public_id, user);
-                setId(mySetting.result.id);
+                const mySetting = await createDB(colorHead, bodyColor, colorBack, colorButton, data.public_id, user);
+                updateEnviroment(mySetting.result.id, "id");
             }
             else {
-                await saveDB(colorHeader, colorBody, colorBackground, colorButton, data.public_id, user, id);
+                await saveDB(colorHead, bodyColor, colorBack, colorButton, data.public_id, user, id);
                 // location.reload(true);
             }
         }
@@ -173,14 +160,18 @@ export default function Settings() {
         getMySettings('test');
         getCloudi();
         UrlImageLogo();
-        setInnerWidth(window.innerWidth-17);
+        setInnerWidth(window.innerWidth - 17);
         window.addEventListener('resize', () => {
-            setInnerWidth(window.innerWidth-17);
+            setInnerWidth(window.innerWidth - 17);
         });
     }, []);
 
     useEffect(() => {
     }, [load]);
+
+    useEffect(() => {
+        getMySettings();
+    }, [imgId])
 
     return (
         <>
@@ -192,11 +183,11 @@ export default function Settings() {
                     :
                     <Background>
                         <div id="title" style={{
-                            background:colorHeader,
-                            width:innerWidth !== undefined ? innerWidth : "100%"
+                            background: colorHead,
+                            width: innerWidth !== undefined ? innerWidth : "100%"
                         }}>
                             <label style={{
-                                color: getMonoColor(getNameColorARGB(colorHeader))
+                                color: getMonoColor(getNameColorARGB(colorHead))
                             }}>Configuracion de la pagina</label>
                             <div id="form--footer">
                                 <button onClick={async () => {
@@ -237,37 +228,34 @@ export default function Settings() {
                             <div id="form--settings">
                                 <div>
                                     <label>Color del Header</label>
-                                    <input type="color" value={colorHeader} onChange={(e) => setColorHeader(e.target.value)} />
+                                    <input type="color" value={colorHead} onChange={(e) =>
+                                        updateEnviroment(e.target.value, "header")} />
                                 </div>
                                 <div>
                                     <label>Color del Body</label>
-                                    <input type="color" value={colorBody} onChange={(e) => {
-                                        setColorBody(e.target.value);
+                                    <input type="color" value={bodyColor} onChange={(e) => {
                                         updateEnviroment(e.target.value, "body");
                                     }} />
                                 </div>
                                 <div>
                                     <label>Color del Background</label>
-                                    <input type="color" value={colorBackground} onChange={(e) => {
-                                        setColorBackground(e.target.value);
+                                    <input type="color" value={colorBack} onChange={(e) => {
                                         updateEnviroment(e.target.value, "background");
                                     }} />
                                 </div>
                                 <div>
                                     <label>Color del Button</label>
                                     <input type="color" value={colorButton} onChange={(e) => {
-                                        setColorButton(e.target.value);
                                         updateEnviroment(e.target.value, "button");
                                     }} />
                                 </div>
                             </div>
                         </Body>
-
                         <Body>
-                            <h1>Productos</h1>
+                            <h1>Usuarios</h1>
                             <div id="form--settings">
                                 <div>
-                                    <GrillaProductos />
+                                    <GrillaUsuarios />
                                 </div>
                             </div>
                         </Body>
@@ -280,10 +268,10 @@ export default function Settings() {
                             </div>
                         </Body>
                         <Body>
-                            <h1>Usuarios</h1>
+                            <h1>Productos</h1>
                             <div id="form--settings">
                                 <div>
-                                    <GrillaUsuarios />
+                                    <GrillaProductos />
                                 </div>
                             </div>
                         </Body>

@@ -4,9 +4,12 @@ import { settingContext } from './settingsContext';
 
 export const SettingsProvider = ({ children }) => {
 
-    const [bodyColor, setBody] = useState('');
-    const [colorBack, setColorBack] = useState('');
-    const [colorButton, setColorButton] = useState('');
+    const [bodyColor, setBody] = useState('#0000');
+    const [colorBack, setColorBack] = useState('#0000');
+    const [colorButton, setColorButton] = useState('#FFFF');
+    const [colorHead, setColorHead] = useState('#0000');
+    const [imgId, setImgId] = useState('');
+    const [id, setId] = useState('');
 
     const createDB = async (colorHeader, colorBody, colorBackground, colorButton, logo_id, user) => {
         const myHeader = new Headers();
@@ -32,22 +35,25 @@ export const SettingsProvider = ({ children }) => {
         const data = await ftch.json();
 
         if (data.result.length != 0) {
-            const { colorBackground, colorBody } = data.result[0];
+            const { colorBackground, colorBody, colorButton, colorHeader, logo_id, id } = data.result[0];
             setBody(colorBody);
             setColorBack(colorBackground);
-            setColorButton(colorButton)
+            setColorButton(colorButton);
+            setColorHead(colorHeader);
+            setImgId(logo_id);
+            setId(id);
         }
 
         return data;
     }
 
     useEffect(() => {
-        getDB();
+        getDB('test');
     }, []);
-    
+
     useEffect(() => {
 
-    }, [colorBack, bodyColor, colorButton])
+    }, [bodyColor, colorBack, colorButton, imgId, colorHead, id])
 
     const saveDB = async (colorHeader, colorBody, colorBackground, colorButton, logo_id, user, id) => {
         const myHeader = new Headers();
@@ -80,6 +86,12 @@ export const SettingsProvider = ({ children }) => {
             case 'button':
                 setColorButton(value);
                 break;
+            case 'header':
+                setColorHead(value);
+                break;
+            case 'id':
+                setId(value);
+                break;
             default:
                 break;
         }
@@ -87,7 +99,7 @@ export const SettingsProvider = ({ children }) => {
 
 
     return (
-        <settingContext.Provider value={{ createDB, getDB, saveDB, updateEnviroment, bodyColor, colorBack, colorButton }}>
+        <settingContext.Provider value={{ createDB, getDB, saveDB, updateEnviroment, bodyColor, colorBack, colorButton, imgId, colorHead, id }}>
             {children}
         </settingContext.Provider>
     )

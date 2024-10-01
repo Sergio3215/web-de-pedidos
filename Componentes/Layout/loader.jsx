@@ -7,16 +7,7 @@ export default function Loader() {
 
     const { colorBack } = useSettings();
 
-    const [colorBK, setColorBK] = useState("#0000");
-
-
-    const getdb = async () => {
-        setColorBK(colorBack);
-    }
-
-    useEffect(() => {
-        getdb();
-    }, []);
+    const [colorBK, setColorBK] = useState(colorBack);
 
     useEffect(() => {
         setColorBK(colorBack);

@@ -8,33 +8,18 @@ const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
 export default function Grilla({ header, grillaBody, label }) {
 
-    const { getDB, colorButton } = useSettings();
-
-    const [colorBtn, setColorButton] = useState("#0000");
-
+    const { colorButton } = useSettings();
 
     const [showModal, setShowModal] = useState(false);
 
-    const getMyColorButton = async (user) => {
-        let mySetting = await getDB(user);
-        if (mySetting.result.length != 0) {
-            setColorButton(mySetting.result[0].colorButton);
-        }
-    }
 
     useEffect(() => {
-        getMyColorButton('test');
-    }, []);
-
-
-    useEffect(() => {
-        setColorButton(colorButton);
     }, [colorButton]);
 
     const Styled = {
         btn: {
-            color: getMonoColor(getNameColorARGB(colorBtn)),
-            background: colorBtn
+            color: getMonoColor(getNameColorARGB(colorButton)),
+            background: colorButton
         }
     }
 
@@ -52,7 +37,7 @@ export default function Grilla({ header, grillaBody, label }) {
                     <></>
             }
             <div className="grilla--button">
-                <button style={Styled.btn} onClick={() =>{
+                <button style={Styled.btn} onClick={() => {
                     showForm();
                 }}>Crear {label}</button>
             </div>
