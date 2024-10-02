@@ -12,14 +12,20 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
     const [width, setWidth] = useState(window.innerWidth);
     const [height, setHeight] = useState(window.innerHeight);
 
+    const [myImg, setMyImg] = useState('');
+
 
     const closeModal = () => {
         setShowModal(false);
     }
 
-    const handlerSubmit = (e) => {
+    const handlerSubmit = async (e) => {
         e.preventDefault();
     }
+
+    useEffect(() => {
+
+    }, [myImg])
 
     return (
         <>
@@ -47,7 +53,10 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                                 <label>{dt}</label>
                                                             </div>
                                                             <div>
-                                                                <input type="checkbox" name={dt} />
+                                                                <input type="checkbox"
+                                                                    name={dt}
+                                                                    required={dt != "Destacados"}
+                                                                />
                                                             </div>
                                                         </div>
                                                         {
@@ -57,17 +66,42 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                                         <div>
                                                                             <label>{"Foto"}</label>
                                                                         </div>
+                                                                        {
+                                                                            myImg == '' ?
+                                                                                <>
+                                                                                </>
+                                                                                :
+                                                                                <div>
+                                                                                    <img
+                                                                                        alt="img product"
+                                                                                        src={myImg}
+                                                                                        width={50}
+                                                                                        height={50}
+                                                                                    />
+                                                                                </div>
+                                                                        }
                                                                         <div>
-                                                                            <input id="grid--file" type="file" name={"file"} style={{
-                                                                                display: "none"
-                                                                            }} />
+                                                                            <input id="grid--file" type="file" name={"file"}
+                                                                                style={{
+                                                                                    display: "none"
+                                                                                }}
+                                                                                required
+                                                                                onChange={(e) => {
+                                                                                    try {
+                                                                                        const link = URL.createObjectURL(e.target.files[0])
+                                                                                        setMyImg(link);
+                                                                                    } catch (error) {
+                                                                                        setMyImg('');
+                                                                                    }
+                                                                                }}
+                                                                            />
                                                                             <button onClick={() => {
                                                                                 document.querySelector("#grid--file").click();
-                                                                            }} 
-                                                                            style={{
-                                                                                background: colorButton,
-                                                                                color: getMonoColor(getNameColorARGB(colorButton))
-                                                                            }}>
+                                                                            }}
+                                                                                style={{
+                                                                                    background: colorButton,
+                                                                                    color: getMonoColor(getNameColorARGB(colorButton))
+                                                                                }}>
                                                                                 Subir Foto
                                                                             </button>
                                                                         </div>
@@ -84,7 +118,7 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                             <label>{dt}</label>
                                                         </div>
                                                         <div>
-                                                            <input type="text" name={dt} />
+                                                            <input type={dt == "Precio" ? "number" : "text"} name={dt} required />
                                                         </div>
                                                     </div>
                                             }
@@ -95,13 +129,13 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                     })
                 }
                 <div>
-                    <input 
-                    style={{
-                        background: colorButton,
-                        color: getMonoColor(getNameColorARGB(colorButton))
-                    }}
-                    type="submit" 
-                    value="Guardar" 
+                    <input
+                        style={{
+                            background: colorButton,
+                            color: getMonoColor(getNameColorARGB(colorButton))
+                        }}
+                        type="submit"
+                        value="Guardar"
                     />
                 </div>
             </form>
