@@ -27,6 +27,7 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
     }, [])
 
     const closeModal = () => {
+        debugger
         Swal.fire({
             position: "center",
             icon: "success",
