@@ -49,7 +49,6 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
                 height: "100%",
             }}></div>
             <form id="form--grilla" action={(formData)=>{
-                debugger
                 updateGrid(formData);
                 closeModal();
             }} method="PUT" >
