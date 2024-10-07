@@ -7,7 +7,7 @@ export async function updateGrid(formData){
     const name = formData.get("Nombre");
     const id = formData.get("id");
     if(file !== undefined && file !== null){
-        console.log(file.size);
+        // console.log(file.size);
         const price = formData.get("Precio");
         const public_id = formData.get("public_id");
         const highlights = formData.get("Destacados");
@@ -20,7 +20,7 @@ export async function updateGrid(formData){
         if(file.size == 0 && file.name == 'undefined'){
             filePublic = public_id;
         }
-        _productQuery.UpdateProduct(id, name, parseInt(price), destacar, filePublic);
+        await _productQuery.UpdateProduct(id, name, parseInt(price), destacar, filePublic);
     }
-    console.log(formData);
+    // console.log(formData);
 }
