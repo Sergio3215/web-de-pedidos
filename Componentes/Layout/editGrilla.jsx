@@ -48,7 +48,7 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
                 width: "100%",
                 height: "100%",
             }}></div>
-            <form id="form--grilla" action={(formData)=>{
+            <form id="form--grilla" action={async (formData)=>{
                 updateGrid(formData);
                 closeModal();
             }} method="PUT" >
