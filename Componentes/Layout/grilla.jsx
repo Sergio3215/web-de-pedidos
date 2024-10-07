@@ -3,18 +3,29 @@
 import { useEffect, useState } from 'react';
 import { useSettings } from '../../Context/Settings/settingsContext';
 import CreateGrilla from './createGrilla';
+import DeleteIco from './deleteIco';
+import EditForm from './editGrilla';
+import EditIco from './editIco';
 
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
-export default function Grilla({ header, grillaBody, label }) {
+export default function Grilla({ header, grillaBody, label, action, deleteClick, updateClick, success, update, intention }) {
 
     const { colorButton } = useSettings();
 
     const [showModal, setShowModal] = useState(false);
+    const [editShowModal, setEditShowModal] = useState(false);
+    const [editUpdate, setEditUpdate] = useState('');
+    const [editName, setEditName] = useState('');
 
 
     useEffect(() => {
-    }, [colorButton]);
+        // console.log(grillaBody);
+    }, [])
+
+    useEffect(() => {
+        // console.log(grillaBody)
+    }, [colorButton, grillaBody]);
 
     const Styled = {
         btn: {
@@ -32,7 +43,14 @@ export default function Grilla({ header, grillaBody, label }) {
         <>
             {
                 showModal ?
-                    <CreateGrilla fields={header} setShowModal={setShowModal} />
+                    <CreateGrilla fields={header} setShowModal={setShowModal} action={action} success={success} update={update} />
+                    :
+                    <></>
+            }
+
+            {
+                editShowModal ?
+                    <EditForm fields={header} setEditShowModal={setEditShowModal} success={success} update={update} setEditUpdate={setEditUpdate} editUpdate={editUpdate} labelEdit={editName} setEditName={setEditName}/>
                     :
                     <></>
             }
@@ -52,10 +70,33 @@ export default function Grilla({ header, grillaBody, label }) {
                 <div id="grilla--table">
                     {
                         grillaBody.length == 0 ?
-                            <div>No hay productos disponibles</div>
+                            <div id="grilla--empty">No hay productos disponibles</div>
                             :
                             grillaBody.map((bd, index) => {
-                                return <div key={index}>{bd}</div>
+                                return (
+                                    <div>
+                                        <div key={index}>
+                                            {bd.name}
+                                            <div>
+                                                <span id="edit--item" onClick={() => {
+                                                    // updateClick(bd.id);
+                                                    setEditShowModal(true);
+                                                    setEditUpdate(bd);
+                                                    setEditName(intention)
+                                                }}>
+                                                    <EditIco setEditShowModal={setEditShowModal} fields={header} action={action} update={update} />
+                                                </span>
+                                                <span id="delete--item" onClick={() => {
+                                                    deleteClick(bd.id);
+                                                }}>
+                                                    <DeleteIco />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div key={index}>{bd.price}</div>
+                                        <div key={index}>{bd.highlights ? "Si" : "No"}</div>
+                                    </div>
+                                )
                             })
                     }
                 </div>

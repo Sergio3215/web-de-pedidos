@@ -6,14 +6,16 @@ import Body from "../Layout/body";
 import Background from "../Layout/background";
 import { useCloudinary } from "../../Context/Cloudinary/cloudinaryContext";
 import panaLogo from '../../public/img example/panaderia logo.png'
-import Image from "next/image";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { color } from "@cloudinary/url-gen/qualifiers/background";
 import GrillaProductos from "../Products/grillaProductos";
 import GrillaRoles from "../Roles/grillaRoles";
 import GrillaUsuarios from "../Usuarios/grillaUsuarios";
 import Loader from "../Layout/loader";
 const crypto = require('crypto');
+import Swal from 'sweetalert2';
+
+import Arrow from "../Layout/arrow";
+
 
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
@@ -59,82 +61,99 @@ export default function Settings() {
     }
 
     const mySaveSettings = async (user) => {
-        if (!selectedFile) {
-            if (id == "") {
-                const mySetting = await createDB(colorHead, bodyColor, colorBack, colorButton, "", user);
-                updateEnviroment(mySetting.result.id, "id");
-            }
-            else {
-                await saveDB(colorHead, bodyColor, colorBack, colorButton, logoPublicId, user, id);
-                // location.reload(true);
-            }
-        }
-        else {
-
-            //upload preset configurar desde clloudinary en configuracion
-            /**
-             * Para llamarlo
-             * https://res.cloudinary.com/dkart8ohp/image/upload/v1726980519/pedido-web/ + public_id
-             */
-
-            const { cloud_name, api_key, api_secret } = configCloudinary.cloudinaryConfig;
-            const timestamp = `${Math.round(new Date().getTime() / 1000)}`;
-
-            if (logoPublicId !== "") {
-                const ftch = await fetch(`${location.origin}/api/cloudinary?public_id=${logoPublicId}`, {
-                    method: 'POST',
-                });
-                const res = await ftch.json();
-            }
-
-            const formData = new FormData();
-            formData.append('upload_preset', 'pedido-web');
-            formData.append('file', selectedFile[0]);
-            formData.append("cloud_name", cloud_name);
-            formData.append("timestamp", timestamp);
-
-            const res = await fetch('https://api.cloudinary.com/v1_1/' + cloud_name + '/image/upload', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            // console.log(data)
-
-            let urlNew = data.url;
-
-            try {
-                // const response = await fetch(data.url);
-                // const blob = await response.blob();
-                // urlNew = URL.createObjectURL(blob);
-
-                const data = cld
-                    .image(data.public_id);
-                const image = data.toURL();
-                if (image != "") {
-                    const response = await fetch(image);
-                    const blob = await response.blob();
-                    urlNew = URL.createObjectURL(blob);
+        try {
+            if (!selectedFile) {
+                if (id == "") {
+                    const mySetting = await createDB(colorHead, bodyColor, colorBack, colorButton, "", user);
+                    updateEnviroment(mySetting.result.id, "id");
                 }
-            } catch (error) {
-
-            }
-
-            setUrlImageLogo(urlNew);
-
-            setLogoPublicId(data.public_id);
-            setSelectedFile(null);
-
-
-            if (id == "") {
-                const mySetting = await createDB(colorHead, bodyColor, colorBack, colorButton, data.public_id, user);
-                updateEnviroment(mySetting.result.id, "id");
+                else {
+                    await saveDB(colorHead, bodyColor, colorBack, colorButton, logoPublicId, user, id);
+                    // location.reload(true);
+                }
             }
             else {
-                await saveDB(colorHead, bodyColor, colorBack, colorButton, data.public_id, user, id);
-                // location.reload(true);
+    
+                //upload preset configurar desde clloudinary en configuracion
+                /**
+                 * Para llamarlo
+                 * https://res.cloudinary.com/dkart8ohp/image/upload/v1726980519/pedido-web/ + public_id
+                 */
+    
+                const { cloud_name, api_key, api_secret } = configCloudinary.cloudinaryConfig;
+                const timestamp = `${Math.round(new Date().getTime() / 1000)}`;
+    
+                if (logoPublicId !== "") {
+                    const ftch = await fetch(`${location.origin}/api/cloudinary?public_id=${logoPublicId}`, {
+                        method: 'POST',
+                    });
+                    const res = await ftch.json();
+                }
+    
+                const formData = new FormData();
+                formData.append('upload_preset', 'pedido-web');
+                formData.append('file', selectedFile[0]);
+                formData.append("cloud_name", cloud_name);
+                formData.append("timestamp", timestamp);
+    
+                const res = await fetch('https://api.cloudinary.com/v1_1/' + cloud_name + '/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                // console.log(data)
+    
+                let urlNew = data.url;
+    
+                try {
+                    // const response = await fetch(data.url);
+                    // const blob = await response.blob();
+                    // urlNew = URL.createObjectURL(blob);
+    
+                    const data = cld
+                        .image(data.public_id);
+                    const image = data.toURL();
+                    if (image != "") {
+                        const response = await fetch(image);
+                        const blob = await response.blob();
+                        urlNew = URL.createObjectURL(blob);
+                    }
+                } catch (error) {
+    
+                }
+    
+                setUrlImageLogo(urlNew);
+    
+                setLogoPublicId(data.public_id);
+                setSelectedFile(null);
+    
+    
+                if (id == "") {
+                    const mySetting = await createDB(colorHead, bodyColor, colorBack, colorButton, data.public_id, user);
+                    updateEnviroment(mySetting.result.id, "id");
+                }
+                else {
+                    await saveDB(colorHead, bodyColor, colorBack, colorButton, data.public_id, user, id);
+                    // location.reload(true);
+                }
             }
+            setLoad(false);
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Tú configuración se ha guadado exitosamente",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        } catch (error) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Ha sucedido un error al intentar guardar",
+                showConfirmButton: false,
+                timer: 1500
+              });
         }
-        setLoad(false);
     }
 
     const getCloudi = async () => {
@@ -186,6 +205,7 @@ export default function Settings() {
                             background: colorHead,
                             width: innerWidth !== undefined ? innerWidth : "100%"
                         }}>
+                            <Arrow color={getMonoColor(getNameColorARGB(colorHead))}/>
                             <label style={{
                                 color: getMonoColor(getNameColorARGB(colorHead))
                             }}>Configuracion de la pagina</label>

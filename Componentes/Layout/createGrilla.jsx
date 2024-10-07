@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useSettings } from "../../Context/Settings/settingsContext";
+import { useCloudinary } from "../../Context/Cloudinary/cloudinaryContext";
+import Swal from "sweetalert2";
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
-export default function CreateGrilla({ fields, setShowModal, action }) {
+export default function CreateGrilla({ fields, setShowModal, action, success, update }) {
 
     const { colorButton } = useSettings();
-
+    const { getCloudinary } = useCloudinary();
 
     const [width, setWidth] = useState(window.innerWidth);
     const [height, setHeight] = useState(window.innerHeight);
@@ -21,6 +23,87 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
+
+        try {
+
+            if(action == undefined){
+                throw new Error("No se ha añadido un action");
+            }
+            let file = false;
+            fields.map(dt => {
+                if (myImg == '' && dt == "Destacados") {
+                    return;
+                }
+                if (dt == "Destacados") {
+                    file = true;
+                }
+            })
+
+            let data = [];
+
+
+            // console.log(fields)
+
+            fields.map((field, index) => {
+                if (field == "Estado" || field == "Destacados") {
+                    data.push({
+                        name: field,
+                        value: e.target[index].checked
+                    })
+                }
+                else {
+                    data.push({
+                        name: field,
+                        value: e.target[index].value
+                    })
+                }
+            });
+
+            if (file) {
+                const cloud = await getCloudinary();
+                const { cloud_name } = cloud.cloudinaryConfig;
+                const timestamp = `${Math.round(new Date().getTime() / 1000)}`;
+
+                const formData = new FormData();
+                formData.append('upload_preset', 'Gallery');
+                formData.append('file', document.querySelector("#grid--file").files[0]);
+                formData.append("cloud_name", cloud_name);
+                formData.append("timestamp", timestamp);
+
+                const res = await fetch('https://api.cloudinary.com/v1_1/' + cloud_name + '/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const response = await res.json();
+
+                data.push({
+                    name: "img_id",
+                    value: response.public_id
+                });
+            }
+            const ftch = await fetch(action, {
+                method: "POST",
+                body: JSON.stringify(data)
+            });
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: success,
+                showConfirmButton: false,
+                timer: 1500
+            });
+            update();
+            closeModal();
+        } catch (err) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Se ha producido un error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     }
 
     useEffect(() => {
@@ -81,11 +164,10 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                                                 </div>
                                                                         }
                                                                         <div>
-                                                                            <input id="grid--file" type="file" name={"file"}
+                                                                            <input id="grid--file" type="file" name="myFile"
                                                                                 style={{
                                                                                     display: "none"
                                                                                 }}
-                                                                                required
                                                                                 onChange={(e) => {
                                                                                     try {
                                                                                         const link = URL.createObjectURL(e.target.files[0])
@@ -95,7 +177,7 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                                                     }
                                                                                 }}
                                                                             />
-                                                                            <button onClick={() => {
+                                                                            <span id="btn--update--file" onClick={() => {
                                                                                 document.querySelector("#grid--file").click();
                                                                             }}
                                                                                 style={{
@@ -103,7 +185,7 @@ export default function CreateGrilla({ fields, setShowModal, action }) {
                                                                                     color: getMonoColor(getNameColorARGB(colorButton))
                                                                                 }}>
                                                                                 Subir Foto
-                                                                            </button>
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </>

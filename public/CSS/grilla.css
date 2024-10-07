@@ -3,13 +3,27 @@
     color:black;
 }
 
-#form--settings #grilla--header {
+#form--settings #grilla--header, #form--settings #grilla--table div{
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
 }
+#grilla--table div{
+    justify-content: center !important;
+    align-items: center;
+}
 
+
+#grilla--table div:hover{
+    background-color: gray;
+    color:white;
+}
+
+#grilla--table #grilla--empty:hover{
+    background-color: transparent;
+    color: black;
+}
 
 #form--settings #grilla--header div {
     border-right: 2px solid rgb(160,160,160);
@@ -30,4 +44,11 @@
     padding: 5px 12px;
     border-radius: 5px;
     font-size: 22px;
+}
+
+#delete--item, #edit--item{
+    cursor: pointer;
+}
+#delete--item svg:hover, #edit--item svg:hover{
+   fill:blueviolet;
 }

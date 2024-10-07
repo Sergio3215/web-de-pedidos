@@ -9,17 +9,21 @@ export default function ProductProvider({ children }) {
 
     const getProduct = async () => {
         const ftch = await fetch('/api/products');
-        const data = await ftch.json();
-        // console.log(data);
-        setProduct(data);
+        const res = await ftch.json();
+        // console.log(res.data);
+        setProduct(res.data);
     }
 
     useEffect(() => {
         getProduct();
-    }, [])
+    }, []);
+
+    
+    useEffect(() => {
+    }, [product])
 
     return (
-        <productContext.Provider value={{ product }}>
+        <productContext.Provider value={{ product, getProduct }}>
             {children}
         </productContext.Provider>
     )

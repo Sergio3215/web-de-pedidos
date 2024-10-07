@@ -8,14 +8,14 @@ import "../public/CSS/loader.css"
 import "../public/CSS/formGrilla.css"
 
 export const metadata = {
-    title: 'Pedido Web',
-    description: 'Pedidos a tiempo y con adelanto dle mismo',
+  title: 'Pedido Web',
+  description: 'Pedidos a tiempo y con adelanto dle mismo',
 }
 
 export default function RootLayout({ children }) {
-    return (
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    )
-  }
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}

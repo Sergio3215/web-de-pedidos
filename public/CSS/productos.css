@@ -1,0 +1,13 @@
+#product--container{
+    border:1px solid white;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 28px;
+    margin: 5px 10px;
+}
+
+#section--product{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

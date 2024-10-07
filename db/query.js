@@ -22,7 +22,7 @@ class SettingsQuery {
 
 
     async UpdateSettings(colorHeader, colorBody, colorBackground, colorButton, logo_id, user, id) {
-        console.log(logo_id)
+        // console.log(logo_id)
         return await prisma.settings.update({
             where: {
                 id: id
@@ -56,13 +56,21 @@ class ProductQuery {
         return await prisma.products.findMany();
     }
 
+    async GetProductById(id) {
+        return await prisma.products.findMany({
+            where: {
+                id: id
+            }
+        })
+    }
+
     async CreateProduct(name, price, hightlight, img_id) {
         return await prisma.products.create({
             data: {
                 name: name,
                 price: price,
-                hightlight: hightlight,
-                img_id: img_id
+                highlights: hightlight,
+                image_id: img_id
             }
         })
     }
@@ -75,8 +83,8 @@ class ProductQuery {
             data: {
                 name: name,
                 price: price,
-                hightlight: hightlight,
-                img_id: img_id
+                highlights: hightlight,
+                image_id: img_id
             }
         })
     }

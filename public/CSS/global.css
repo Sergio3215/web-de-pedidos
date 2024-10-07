@@ -4,7 +4,7 @@ body {
     border: 0px;
 }
 
-button, input[type=submit] {
+button, input[type=submit], #btn--update--file {
     padding: 8px 24px;
     border-radius: 5px;
     border: 1px solid gray;

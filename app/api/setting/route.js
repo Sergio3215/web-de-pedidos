@@ -24,9 +24,9 @@ export async function PUT(req) {
         const body = await req.json();
         const { colorHeader, colorBody, colorBackground, colorButton, user, id, logo_id } = body;
         data = await settingQuery.UpdateSettings(colorHeader, colorBody, colorBackground, colorButton, logo_id, user, id);
-        console.log(data);
+        // console.log(data);
     } catch (error) {
-        console.log(error)
+        // console.log(error)
     }
     return Response.json({ result: data });
 }

@@ -19,7 +19,7 @@
     text-align: center;
     font-size: 40px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding-bottom: 20px;
     padding-top: 20px;
@@ -31,6 +31,11 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
+}
+
+#arrow-svg{
+    cursor: pointer;
+    margin-left: 18px;
 }
 
 .pic--logo img {
