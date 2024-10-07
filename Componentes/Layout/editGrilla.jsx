@@ -48,7 +48,11 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
                 width: "100%",
                 height: "100%",
             }}></div>
-            <form id="form--grilla" action={updateGrid} method="PUT" >
+            <form id="form--grilla" action={(formData)=>{
+                debugger
+                updateGrid(formData);
+                closeModal();
+            }} method="PUT" >
                 <div id="close--popup" onClick={closeModal}>X</div>
                 <div><input name="id" readonly type="hidden" value={editUpdate.id} /></div>
                 {
