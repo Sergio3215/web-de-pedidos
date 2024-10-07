@@ -82,7 +82,7 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
                                         required
                                         value={price}
                                         onChange={(e) => {
-                                            setPrice(e.target.value);
+                                            setPrice(e.target.value < 0 ? 0 : e.target.value);
                                         }}
                                     />
                                 </div>
