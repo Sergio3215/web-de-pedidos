@@ -43,6 +43,7 @@ export default function Product({ product }) {
                     src={url}
                     width={200}
                     height={180}
+                    alt={"Image for "+product.name}
                 />
             </div>
             <div>
