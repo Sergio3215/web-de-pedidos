@@ -11,6 +11,7 @@ export default function ProductProvider({ children }) {
         const ftch = await fetch('/api/products');
         const res = await ftch.json();
         // console.log(res.data);
+        debugger
         setProduct(res.data);
     }
 
