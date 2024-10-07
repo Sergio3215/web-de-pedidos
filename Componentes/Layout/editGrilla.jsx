@@ -2,7 +2,7 @@
 'use client'
 
 import { useSettings } from "../../Context/Settings/settingsContext";
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { updateGrid } from '../../ServerActions/editGrid'
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 import Swal from 'sweetalert2';
@@ -18,8 +18,8 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
     const [highlights, setHighlights] = useState(false);
 
 
-    useEffect(()=>{
-        if(labelEdit == "Producto"){
+    useEffect(() => {
+        if (labelEdit == "Producto") {
             setName(editUpdate.name);
             setPrice(editUpdate.price);
             setHighlights(editUpdate.highlights);
@@ -27,13 +27,6 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
     }, [])
 
     const closeModal = () => {
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Se ha actualizado el registro correctamente",
-            showConfirmButton: false,
-            timer: 1500
-        });
         setTimeout(() => {
             update();
         }, 2000);
@@ -48,8 +41,15 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
                 width: "100%",
                 height: "100%",
             }}></div>
-            <form id="form--grilla" action={async (formData)=>{
+            <form id="form--grilla" action={async (formData) => {
                 updateGrid(formData);
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Se ha actualizado el registro correctamente",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 closeModal();
             }} method="PUT" >
                 <div id="close--popup" onClick={closeModal}>X</div>
