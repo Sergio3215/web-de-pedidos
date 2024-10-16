@@ -98,7 +98,47 @@ class ProductQuery {
     }
 }
 
+class RolQuery{
+    constructor(){
+
+    }
+
+    async GetRol(){
+        return await prisma.rol.findMany();
+    }
+    
+    async CreateRol(name, rol) {
+        return await prisma.rol.create({
+            data: {
+                name: name,
+                rol: rol
+            }
+        })
+    }
+
+    async UpdateRol(id, name, rol) {
+        return await prisma.rol.update({
+            where: {
+                id: id
+            },
+            data: {
+                name: name,
+                rol: rol
+            }
+        })
+    }
+
+    async DeleteRol(id) {
+        return await prisma.rol.delete({
+            where: {
+                id: id
+            }
+        })
+    }
+}
+
 module.exports = {
     SettingsQuery,
-    ProductQuery
+    ProductQuery,
+    RolQuery
 };

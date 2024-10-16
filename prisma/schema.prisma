@@ -16,10 +16,8 @@ model users {
   rol      String
 }
 
-model customers {
+model rol {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String
-  password String
   name     String
   rol      String
 }

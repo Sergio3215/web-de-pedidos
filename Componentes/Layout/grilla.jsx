@@ -50,14 +50,19 @@ export default function Grilla({ header, grillaBody, label, action, deleteClick,
 
             {
                 editShowModal ?
-                    <EditForm fields={header} setEditShowModal={setEditShowModal} success={success} update={update} setEditUpdate={setEditUpdate} editUpdate={editUpdate} labelEdit={editName} setEditName={setEditName}/>
+                    <EditForm fields={header} setEditShowModal={setEditShowModal} success={success} update={update} setEditUpdate={setEditUpdate} editUpdate={editUpdate} labelEdit={editName} setEditName={setEditName} />
                     :
                     <></>
             }
             <div className="grilla--button">
-                <button style={Styled.btn} onClick={() => {
-                    showForm();
-                }}>Crear {label}</button>
+                {
+                    label == "Usuario" ?
+                        <></>
+                        :
+                        <button style={Styled.btn} onClick={() => {
+                            showForm();
+                        }}>Crear {label}</button>
+                }
             </div>
             <div id="grilla--container">
                 <div id="grilla--header">
@@ -86,15 +91,36 @@ export default function Grilla({ header, grillaBody, label, action, deleteClick,
                                                 }}>
                                                     <EditIco setEditShowModal={setEditShowModal} fields={header} action={action} update={update} />
                                                 </span>
-                                                <span id="delete--item" onClick={() => {
-                                                    deleteClick(bd.id);
-                                                }}>
-                                                    <DeleteIco />
-                                                </span>
+                                                {
+                                                    intention == "Usuario" ?
+                                                        <></>
+                                                        :
+                                                        <span id="delete--item" onClick={() => {
+                                                            deleteClick(bd.id);
+                                                        }}>
+                                                            <DeleteIco />
+                                                        </span>
+                                                }
                                             </div>
                                         </div>
                                         <div key={index}>{bd.price}</div>
-                                        <div key={index}>{bd.highlights ? "Si" : "No"}</div>
+                                        {
+                                            intention == "Rol" ?
+                                                <div key={index}>{
+                                                    bd.rol == "1" ?
+                                                        "Total"
+                                                        :
+                                                        bd.rol == "2" ?
+                                                            "Parcial"
+                                                            :
+                                                            bd.rol == "3" ?
+                                                                "Ninguna"
+                                                                :
+                                                                "No se ha seleccionado un rol"
+                                                }</div>
+                                                :
+                                                <div key={index}>{bd.highlights ? "Si" : "No"}</div>
+                                        }
                                     </div>
                                 )
                             })

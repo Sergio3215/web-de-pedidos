@@ -58,7 +58,7 @@ export default function GrillaProductos() {
 
 
     const updateClick = async (id, body) => {
-        console.log(id);
+        // console.log(id);
         await fetch(`/api/products?id=${id}`, {
             method: 'PUT',
             body: JSON.stringify(body)

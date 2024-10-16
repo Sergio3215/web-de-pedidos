@@ -26,7 +26,7 @@ export default function CreateGrilla({ fields, setShowModal, action, success, up
 
         try {
 
-            if(action == undefined){
+            if (action == undefined) {
                 throw new Error("No se ha añadido un action");
             }
             let file = false;
@@ -93,9 +93,12 @@ export default function CreateGrilla({ fields, setShowModal, action, success, up
                 showConfirmButton: false,
                 timer: 1500
             });
-            update();
+            if (update !== undefined) {
+                update();
+            }
             closeModal();
         } catch (err) {
+            console.log(err)
             Swal.fire({
                 position: "center",
                 icon: "error",
@@ -123,88 +126,105 @@ export default function CreateGrilla({ fields, setShowModal, action, success, up
                         return (
                             <>
                                 {
-                                    dt == "Fecha Creación" ?
+                                    dt == "Permisos" ?
                                         <>
+                                            <div id="form--permisos" key={index}>
+                                                <div>
+                                                    <label>{dt}</label>
+                                                </div>
+                                                <div>
+                                                    <select id="form--permisos--select" require>
+                                                        <option value="0">Seleccionar Rol</option>
+                                                        <option value="1">Total</option>
+                                                        <option value="2">Parcial</option>
+                                                        <option value="3">Ninguna</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </>
                                         :
-                                        <>
-                                            {
-                                                dt == "Destacados" || dt == "Estado" ?
-                                                    <>
-                                                        <div id="form--checkbox" key={index}>
+                                        dt == "Fecha Creación" ?
+                                            <>
+                                            </>
+                                            :
+                                            <>
+                                                {
+                                                    dt == "Destacados" || dt == "Estado" ?
+                                                        <>
+                                                            <div id="form--checkbox" key={index}>
+                                                                <div>
+                                                                    <label>{dt}</label>
+                                                                </div>
+                                                                <div>
+                                                                    <input type="checkbox"
+                                                                        name={dt}
+                                                                        required={dt != "Destacados"}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            {
+                                                                dt == "Destacados" ?
+                                                                    <>
+                                                                        <div key={index}>
+                                                                            <div>
+                                                                                <label>{"Foto"}</label>
+                                                                            </div>
+                                                                            {
+                                                                                myImg == '' ?
+                                                                                    <>
+                                                                                    </>
+                                                                                    :
+                                                                                    <div>
+                                                                                        <img
+                                                                                            alt="img product"
+                                                                                            src={myImg}
+                                                                                            width={50}
+                                                                                            height={50}
+                                                                                        />
+                                                                                    </div>
+                                                                            }
+                                                                            <div>
+                                                                                <input id="grid--file" type="file" name="myFile"
+                                                                                    style={{
+                                                                                        display: "none"
+                                                                                    }}
+                                                                                    onChange={(e) => {
+                                                                                        try {
+                                                                                            const link = URL.createObjectURL(e.target.files[0])
+                                                                                            setMyImg(link);
+                                                                                        } catch (error) {
+                                                                                            setMyImg('');
+                                                                                        }
+                                                                                    }}
+                                                                                />
+                                                                                <span id="btn--update--file" onClick={() => {
+                                                                                    document.querySelector("#grid--file").click();
+                                                                                }}
+                                                                                    style={{
+                                                                                        background: colorButton,
+                                                                                        color: getMonoColor(getNameColorARGB(colorButton))
+                                                                                    }}>
+                                                                                    Subir Foto
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                    :
+                                                                    <>
+                                                                    </>
+                                                            }
+                                                        </>
+                                                        :
+                                                        <div key={index}>
                                                             <div>
                                                                 <label>{dt}</label>
                                                             </div>
                                                             <div>
-                                                                <input type="checkbox"
-                                                                    name={dt}
-                                                                    required={dt != "Destacados"}
-                                                                />
+                                                                <input type={dt == "Precio" ? "number" : "text"} name={dt} required />
                                                             </div>
                                                         </div>
-                                                        {
-                                                            dt == "Destacados" ?
-                                                                <>
-                                                                    <div key={index}>
-                                                                        <div>
-                                                                            <label>{"Foto"}</label>
-                                                                        </div>
-                                                                        {
-                                                                            myImg == '' ?
-                                                                                <>
-                                                                                </>
-                                                                                :
-                                                                                <div>
-                                                                                    <img
-                                                                                        alt="img product"
-                                                                                        src={myImg}
-                                                                                        width={50}
-                                                                                        height={50}
-                                                                                    />
-                                                                                </div>
-                                                                        }
-                                                                        <div>
-                                                                            <input id="grid--file" type="file" name="myFile"
-                                                                                style={{
-                                                                                    display: "none"
-                                                                                }}
-                                                                                onChange={(e) => {
-                                                                                    try {
-                                                                                        const link = URL.createObjectURL(e.target.files[0])
-                                                                                        setMyImg(link);
-                                                                                    } catch (error) {
-                                                                                        setMyImg('');
-                                                                                    }
-                                                                                }}
-                                                                            />
-                                                                            <span id="btn--update--file" onClick={() => {
-                                                                                document.querySelector("#grid--file").click();
-                                                                            }}
-                                                                                style={{
-                                                                                    background: colorButton,
-                                                                                    color: getMonoColor(getNameColorARGB(colorButton))
-                                                                                }}>
-                                                                                Subir Foto
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                                :
-                                                                <>
-                                                                </>
-                                                        }
-                                                    </>
-                                                    :
-                                                    <div key={index}>
-                                                        <div>
-                                                            <label>{dt}</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type={dt == "Precio" ? "number" : "text"} name={dt} required />
-                                                        </div>
-                                                    </div>
-                                            }
-                                        </>
+                                                }
+                                            </>
                                 }
                             </>
                         )

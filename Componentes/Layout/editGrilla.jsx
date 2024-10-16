@@ -15,6 +15,7 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
     const [imgFile, setImgFile] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
+    const [rol, setRol] = useState(0);
     const [highlights, setHighlights] = useState(false);
 
 
@@ -23,6 +24,10 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
             setName(editUpdate.name);
             setPrice(editUpdate.price);
             setHighlights(editUpdate.highlights);
+        }
+        else if (labelEdit == "Rol") {
+            setName(editUpdate.name);
+            setRol(editUpdate.rol);
         }
     }, [])
 
@@ -122,7 +127,61 @@ export default function EditForm({ fields, success, update, setEditShowModal, se
                             </div>
                         </>
                         :
-                        <></>
+
+                        labelEdit == "Rol" ?
+                            <>
+                                <div>
+                                    <div>
+                                        <label>{"Nombre"}</label>
+                                    </div>
+                                    <div>
+                                        <input type="text"
+                                            name={"Nombre"}
+                                            required
+                                            value={name}
+                                            onChange={(e) => {
+                                                setName(e.target.value);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <label>{"Rol"}</label>
+                                    </div>
+                                    <div>
+                                        <select name="Rol" id="form--permisos--select" require>
+                                            <option value="0">Seleccionar Rol</option>
+                                            {
+                                                rol == "1" ?
+                                                    <option value="1" selected >Total</option>
+                                                    :
+                                                    <>
+                                                        <option value="1">Total</option>
+                                                    </>
+                                            }
+                                            {
+                                                rol == "2" ?
+                                                    <option value="2" selected >Parcial</option>
+                                                    :
+                                                    <>
+                                                        <option value="2">Parcial</option>
+                                                    </>
+                                            }
+                                            {
+                                                rol == "3" ?
+                                                    <option value="3" selected >Ninguna</option>
+                                                    :
+                                                    <>
+                                                        <option value="3">Ninguna</option>
+                                                    </>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </>
+                            :
+                            <></>
                 }
                 <div>
                     <input
