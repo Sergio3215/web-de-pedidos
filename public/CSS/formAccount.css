@@ -1,0 +1,19 @@
+#form-account div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#form-account div input[type=text], #form-account div input[type=password], #form-account div input[type=email]{
+    border-radius: 5px;
+    font-size: 28px;
+}
+
+#form-account div input:focus-visible{
+    box-shadow: 1px 1px 10px rgba(249, 225, 154, 0.9);
+}
+
+#form-account div label, h1{
+    font-size: 36px;
+}

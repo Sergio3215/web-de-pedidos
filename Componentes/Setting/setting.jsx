@@ -271,7 +271,7 @@ export default function Settings() {
                                 </div>
                             </div>
                         </Body>
-                        <Body>
+                        <Body back={colorBack}>
                             <h1>Usuarios</h1>
                             <div id="form--settings">
                                 <div>
@@ -279,7 +279,7 @@ export default function Settings() {
                                 </div>
                             </div>
                         </Body>
-                        <Body>
+                        <Body back={colorBack}>
                             <h1>Roles</h1>
                             <div id="form--settings">
                                 <div>
@@ -287,7 +287,7 @@ export default function Settings() {
                                 </div>
                             </div>
                         </Body>
-                        <Body>
+                        <Body back={colorBack}>
                             <h1>Productos</h1>
                             <div id="form--settings">
                                 <div>

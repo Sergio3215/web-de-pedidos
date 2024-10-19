@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSettings } from "../../Context/Settings/settingsContext";
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
-export default function Body({ children }) {
+export default function Body({ children, back }) {
 
     const { bodyColor } = useSettings();
 
@@ -15,7 +15,7 @@ export default function Body({ children }) {
 
     useEffect(()=> {
         
-    }, [bodyColor])
+    }, [bodyColor, back])
 
     const getPadding = ()=>{
         try {
@@ -31,8 +31,8 @@ export default function Body({ children }) {
     return (
         <div id="body">
             <div style={{
-                background: bodyColor,
-                color: (bodyColor != "") ? getMonoColor(getNameColorARGB(bodyColor)) : '',
+                background: back !== undefined ? back : bodyColor,
+                color: back !== undefined ? getMonoColor(getNameColorARGB(back)) : (bodyColor != "") ? getMonoColor(getNameColorARGB(bodyColor)) : '',
                 padding: padding,
                 textAlign:"center"
             }}>

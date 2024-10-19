@@ -39,6 +39,14 @@ export default function Header() {
             url: 'settings',
             name: "Configuración"
         },
+        {
+            url: 'login',
+            name: "Iniciar Sesión"
+        },
+        {
+            url: 'signin',
+            name: "Registrarse"
+        },
     ]);
 
     const getColor = async () => {
