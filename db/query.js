@@ -116,6 +116,14 @@ class RolQuery{
         })
     }
 
+    async GetRolByRolName(name) {
+        return await prisma.rol.findMany({
+            where: {
+                rol: name
+            }
+        })
+    }
+
     async UpdateRol(id, name, rol) {
         return await prisma.rol.update({
             where: {
@@ -137,8 +145,75 @@ class RolQuery{
     }
 }
 
+
+class AccountQuery{
+    constructor(){
+
+    }
+
+    async GetUsers(){
+        return await prisma.users.findMany();
+    }
+
+    
+    async GetUserById(id) {
+        return await prisma.users.findMany({
+            where: {
+                id: id
+            }
+        })
+    }
+    
+    async GetUserByEmail(email) {
+        return await prisma.users.findMany({
+            where: {
+                email: email
+            }
+        })
+    }
+    
+    async CreateRol(name,lastname, email, password, rol, user) {
+        return await prisma.users.create({
+            data: {
+                name: name,
+                lastname: lastname,
+                password: password,
+                email: email,
+                rol: rol,
+                user: user,
+                avatar_id: ''
+            }
+        })
+    }
+
+    async UpdateUsers(id,name,lastname, email, password, rol, user) {
+        return await prisma.users.update({
+            where: {
+                id: id
+            },
+            data: {
+                name: name,
+                lastname: lastname,
+                password: password,
+                email: email,
+                rol: rol,
+                user: user
+            }
+        })
+    }
+
+    async DeleteUsers(id) {
+        return await prisma.users.delete({
+            where: {
+                id: id
+            }
+        })
+    }
+}
+
 module.exports = {
     SettingsQuery,
     ProductQuery,
-    RolQuery
+    RolQuery,
+    AccountQuery
 };

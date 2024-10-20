@@ -22,32 +22,7 @@ export default function Header() {
     });
 
     const [urlIdLogo, setUrlIdLogo] = useState("");
-    const [arrOptions, setArrOptions] = useState([
-        {
-            url: '',
-            name: "Inicio"
-        },
-        {
-            url: 'products',
-            name: "Productos"
-        },
-        {
-            url: 'contacts',
-            name: "Contactos"
-        },
-        {
-            url: 'settings',
-            name: "Configuración"
-        },
-        {
-            url: 'login',
-            name: "Iniciar Sesión"
-        },
-        {
-            url: 'signin',
-            name: "Registrarse"
-        },
-    ]);
+    const [arrOptions, setArrOptions] = useState([]);
 
     const getColor = async () => {
         const data = cld
@@ -70,21 +45,37 @@ export default function Header() {
         }
     }
 
+    const getNav = async () => {
+        const ftch = await fetch('/api/navBar');
+        const data = await ftch.json();
+        setArrOptions(data.nav);
+    }
+
     useEffect(() => {
         getColor();
+        getNav();
     }, []);
 
     useEffect(() => {
         // console.log(urlIdLogo)
     }, [urlIdLogo]);
 
-    
+
     useEffect(() => {
         getColor();
     }, [imgId]);
 
     const redirectURL = (href) => {
         router.push(`/${href}`);
+    }
+
+    const logout = async (url)=>{
+        const ft = await fetch(url);
+        const res = await ft.json();
+
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 500)
     }
 
     return (
@@ -105,12 +96,24 @@ export default function Header() {
                         {
                             arrOptions.map((m, index) => {
                                 return (
-                                    <li onClick={() => redirectURL(m.url)}
-                                        style={{
-                                            color: getMonoColor(getNameColorARGB(colorHead))
-                                        }} key={index}>
-                                        {m.name}
-                                    </li>
+                                    <>
+                                        {
+                                            m.url == "/api/logout" ?
+                                                <li onClick={() => logout(m.url)}
+                                                    style={{
+                                                        color: getMonoColor(getNameColorARGB(colorHead))
+                                                    }} key={index}>
+                                                    {m.name}
+                                                </li>
+                                                :
+                                                <li onClick={() => redirectURL(m.url)}
+                                                    style={{
+                                                        color: getMonoColor(getNameColorARGB(colorHead))
+                                                    }} key={index}>
+                                                    {m.name}
+                                                </li>
+                                        }
+                                    </>
                                 )
                             })
                         }

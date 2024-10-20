@@ -5,6 +5,8 @@ import { useSettings } from "../../Context/Settings/settingsContext"
 import { useEffect } from "react";
 const { getMonoColor, getNameColorARGB } = require('adaptive-color');
 
+import { createAccount } from "../../ServerActions/createAccount";
+
 
 
 export default function SignInComponent() {
@@ -23,7 +25,7 @@ export default function SignInComponent() {
                     <h1 style={{
                         fontSize:"50px"
                     }}>Registrarse</h1>
-                    <form action="" method="post" id="form-account">
+                    <form action={createAccount} method="post" id="form-account">
                         <div>
                             <label>Nombre</label>
                             <input type="text" name="name" required />

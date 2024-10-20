@@ -15,6 +15,7 @@ model users {
   name     String
   lastname String
   rol      String
+  avatar_id  String?
 }
 
 model rol {
